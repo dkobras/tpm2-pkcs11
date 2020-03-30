@@ -16,15 +16,15 @@ if [ "$ASAN_ENABLED" = "true" ]; then
 fi
 
 function pinentry() {
-  cat <<END | expect
+  cat <<END | expect -d
 spawn $*
 expect {
-  "Password or Pin *label*" {
-    send -- "myuserpin\r"; exp_continue
-  } "Password or Pin *import-keys*" {
-    send -- "anotheruserpin\r"; exp_continue
-  } "Password or Pin *esys-tr*" {
-    send -- "userpin3\r"; exp_continue
+  "Password or Pin *label*:" {
+    sleep 1; send -- "myuserpin\r"; exp_continue
+  } "Password or Pin *import-keys*:" {
+    sleep 1; send -- "anotheruserpin\r"; exp_continue
+  } "Password or Pin *esys-tr*:" {
+    sleep 1; send -- "userpin3\r"; exp_continue
   } eof
 }
 catch wait result

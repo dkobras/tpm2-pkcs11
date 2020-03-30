@@ -72,7 +72,14 @@ fi
 
 ../configure --enable-unit --enable-integration --enable-esapi-session-manage-flags $config_flags
 make -j$(nproc)
+
+env
+
+ls -l /proc/self/fd
+
+tail -F test/integration/nss-tests.log &
 make -j check
+kill %1
 
 if [[ "$ENABLE_COVERAGE" == "true" ]]; then
     bash <(curl -s https://codecov.io/bash)
